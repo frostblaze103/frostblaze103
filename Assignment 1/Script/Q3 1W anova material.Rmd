@@ -1,0 +1,35 @@
+---
+title: "Q3 1W anova material"
+author: "Zihao He"
+date: "24/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r dicots, message=FALSE}
+## this was done using the template charlotte had provided in the modules in canvas
+library(tidyverse) ## loadup tidyverse packages prior to everything else
+dicots <- read_csv("~/R studio workshop projects/Main workshop projects/Assignment 1/Assignment 1/Data/dicots.csv") 
+## attempt to find the mean of the treatment groups
+dicots %>%
+  group_by(Treatment) %>%
+  summarise(avg = mean(Total_natives))
+## produce a linear model, note: everything is case sensitive from this point onwards if we wanna avoid not found errors
+dicots_lm <- lm(Total_natives ~ Treatment, data = dicots)
+## this will tell R to generate a 1 way anova
+lm_anova <- anova(dicots_lm)
+## this is to produce a F-table
+lm_anova
+## this one is to check the hypothesis
+summary(dicots_lm)$coef
+```
+
+
+
+
+
+
