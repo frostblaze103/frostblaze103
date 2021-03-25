@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r dicots, message=FALSE}
 ## this was done using the template charlotte had provided in the modules in canvas
 library(tidyverse) ## loadup tidyverse packages prior to everything else
-dicots <- read_csv("~/R studio workshop projects/Main workshop projects/Assignment 1/Assignment 1/Data/dicots.csv") 
+## locate the csv file for developing the data into tables
+dicots <- read_csv("~/R studio workshop projects/Main workshop projects/Assignment 1/Assignment 1/Data/dicots.csv")
 ## attempt to find the mean of the treatment groups
 dicots %>%
   group_by(Treatment) %>%
@@ -26,8 +27,19 @@ lm_anova <- anova(dicots_lm)
 lm_anova
 ## this one is to check the hypothesis
 summary(dicots_lm)$coef
-```
 
+## Re-leveling for Control to be in control
+dicots$Treatment <- factor(dicots$Treatment, ordered = FALSE)
+dicot_redo <- dicots %>% mutate(Treatment = relevel(dicots$Treatment, "Control"))
+## another linear model
+dicot_redo_lm <- lm(Total_natives ~ Treatment, data = dicot_redo)
+## 1 way anova
+lm_relevel <- anova (dicot_redo_lm)
+## re-leveled F-table
+lm_relevel
+## re-leveled hypothesis check
+summary(dicot_redo_lm)$coef
+```
 
 
 

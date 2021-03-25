@@ -206,6 +206,45 @@ summary(dicots_lm)$coef</code></pre>
 ## TreatmentControl                  -1.166667   1.129159 -1.033217 3.138351e-01
 ## TreatmentHerbicide                -1.333333   1.129159 -1.180820 2.515271e-01
 ## TreatmentHerbicide and Biocontrol -3.000000   1.129159 -2.656845 1.513909e-02</code></pre>
+<pre class="r"><code>## Re-leveling for Control to be in control
+dicots$Treatment &lt;- factor(dicots$Treatment, ordered = FALSE)
+dicot_redo &lt;- dicots %&gt;% mutate(Treatment = relevel(dicots$Treatment, &quot;Control&quot;))
+## another linear model
+dicot_redo_lm &lt;- lm(Total_natives ~ Treatment, data = dicot_redo)
+## 1 way anova
+lm_relevel &lt;- anova (dicot_redo_lm)
+## re-leveled F-table
+lm_relevel</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Total_natives
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## Treatment  3 27.458  9.1528  2.3929 0.09874 .
+## Residuals 20 76.500  3.8250                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>## re-leveled hypothesis check
+summary(dicot_redo_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Total_natives ~ Treatment, data = dicot_redo)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8333 -1.7083  0.1667  1.3750  4.1667 
+## 
+## Coefficients:
+##                                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                        10.6667     0.7984  13.359    2e-11 ***
+## TreatmentBiocontrol                 1.1667     1.1292   1.033    0.314    
+## TreatmentHerbicide                 -0.1667     1.1292  -0.148    0.884    
+## TreatmentHerbicide and Biocontrol  -1.8333     1.1292  -1.624    0.120    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.956 on 20 degrees of freedom
+## Multiple R-squared:  0.2641, Adjusted R-squared:  0.1537 
+## F-statistic: 2.393 on 3 and 20 DF,  p-value: 0.09874</code></pre>
 
 
 
