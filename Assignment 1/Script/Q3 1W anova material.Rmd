@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## this was done using the template charlotte had provided in the modules in canvas
 library(tidyverse) ## loadup tidyverse packages prior to everything else
 ## locate the csv file for developing the data into tables
-dicots <- read_csv("~/R studio workshop projects/Main workshop projects/Assignment 1/Assignment 1/Data/dicots.csv")
+dicots <- read_csv("~/R studio workshop projects/Main workshop projects/Assignment 1/Assignment 1/dicots.csv")
 ## attempt to find the mean of the treatment groups
 dicots %>%
   group_by(Treatment) %>%
@@ -39,6 +39,7 @@ lm_relevel <- anova (dicot_redo_lm)
 lm_relevel
 ## re-leveled hypothesis check
 summary(dicot_redo_lm)$coef
+
 ```
 
 
